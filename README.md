@@ -95,7 +95,7 @@ Después pruebe la configuración, que debe ser correcta, y guardela. Tome nota 
 En este punto, puede probar el script de backup para asegurarse de que funcione correctamente. Para ello, ejecute el siguiente comando reemplazando los valores:
 
 ```bash
-POSTGRES_HOST=<host> POSTGRES_PORT=<port> POSTGRES_DATABASE=<database> POSTGRES_USER=<user> POSTGRES_PASSWORD=<password> BACKUP_DIRECTORY=/path/to/backups S3CMD_CONFIG_FILE=/path/to/.s3cfg S3_BUCKET=<bucket> ./backup.sh
+POSTGRES_HOST=<host> POSTGRES_PORT=<port> POSTGRES_DATABASE=<database> POSTGRES_USER=<user> POSTGRES_PASSWORD=<password> BACKUP_DIRECTORY=/path/to/backups S3CMD_CONFIG_FILE=/path/to/.s3cfg S3_BUCKET=<bucket> RETENTION_DAYS_LOCAL=<days> ./backup.sh
 ```
 
 ### Crear CRON job
@@ -111,7 +111,7 @@ crontab -e
 Si es la primera vez, escoja Nano como editor de texto. Después, copie y pegue la siguiente línea al final del archivo:
 
 ```bash
-0 12 * * 0 POSTGRES_HOST=<host> POSTGRES_PORT=<port> POSTGRES_DATABASE=<database> POSTGRES_USER=<user> POSTGRES_PASSWORD=<password> BACKUP_DIRECTORY=/path/to/pwd/backups S3CMD_CONFIG_FILE=/path/to/.s3cfg S3_BUCKET=<bucket> /path/to/pwd/backup.sh
+0 12 * * 0 POSTGRES_HOST=<host> POSTGRES_PORT=<port> POSTGRES_DATABASE=<database> POSTGRES_USER=<user> POSTGRES_PASSWORD=<password> BACKUP_DIRECTORY=/path/to/pwd/backups S3CMD_CONFIG_FILE=/path/to/.s3cfg S3_BUCKET=<bucket> RETENTION_DAYS_LOCAL=<days> /path/to/pwd/backup.sh
 ```
 
 Reemplazando:
@@ -124,6 +124,7 @@ Reemplazando:
 - `/path/to/pwd` por la salida del comando `pwd` en la carpeta donde se encuentra el script de backup
 - `/path/to/.s3cfg` por la ruta al archivo de configuración de s3cmd
 - `<bucket>` por el nombre de su bucket
+- `<days>` por el número de días que desea mantener los backups en el servidor local
 
 Cambie los primeros 5 datos del CRON para configurar con qué frecuencia se ejecutará el script de backup.
 
